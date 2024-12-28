@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_photo"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/image_add"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:layout_alignParentStart="true"/>
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="7dp"
+            android:text="공유하기"/>
+    </RelativeLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_add_images"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="#FBF0FF"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_add_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="게시글을 작성해 보세요"
+        android:background="@android:color/transparent"
+        android:textSize="14sp"/>
+
+</LinearLayout>
+

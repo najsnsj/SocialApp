@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:background="#FBF0FF" />
+
+            <ImageButton
+                android:id="@+id/ib_edit"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:src="@drawable/setting"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="top|start"
+                android:layout_margin="10dp" />
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:layout_gravity="top|end"
+                android:layout_margin="10dp" />
+
+            <ImageButton
+                android:id="@+id/ib_block_friend"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/block"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="top|end"
+                android:layout_margin="10dp"/>
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:layout_gravity="top|end"
+                android:layout_margin="10dp" />
+
+            <ImageButton
+                android:id="@+id/ib_image"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:visibility="gone"
+                android:src="@drawable/edit"
+                android:scaleType="fitCenter"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="15dp" />
+
+            <ImageButton
+                android:id="@+id/ib_delete_img"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:visibility="gone"
+                android:src="@drawable/delete"
+                android:scaleType="fitCenter"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="15dp" />
+
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="이 름"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:clickable="false"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:id="@+id/profile_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="상태 메시지"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:clickable="false"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/btn_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="메시지" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/ib_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="50dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/add" />
+
+            <ImageButton
+                android:id="@+id/ib_block"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/block" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_preview_story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>
