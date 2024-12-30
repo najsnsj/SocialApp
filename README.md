@@ -5,7 +5,7 @@
 개발 기술
   * 개발 툴: 안드로이드 스튜디오
   * 개발 언어: 자바
-  * 서버: Node.js
+  * 서버: Node.js (https://github.com/najsnsj/server)
   * DB: MySQL
 
 테이블
