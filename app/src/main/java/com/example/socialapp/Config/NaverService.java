@@ -1,6 +1,6 @@
 package com.example.socialapp.Config;
 
 public class NaverService {
-    public static String clientId = "ClientId";
-    public static String clientSecret = "ClientSecret";
+    public static String clientId = "OdUgNGB88GRrBC_kxVhQ";
+    public static String clientSecret = "6xsvaCjexK";
 }
