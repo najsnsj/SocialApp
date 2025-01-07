@@ -30,6 +30,7 @@
 | 자신의 프로필의 이미지, 상태메시지, 닉네임을 변경 | 가입한 E-mail을 통해 유저 검색(친구일 시 닉네임으로 검색 가능) |
 | ![차단 친구 관리](https://github.com/user-attachments/assets/1d61a347-8f0d-482a-a5e6-8d6a3e0da9cc) | ![친추한 친구 추가](https://github.com/user-attachments/assets/567bd807-4cb8-40b4-85f7-1233bddcdcf7) |
 | 차단한 친구 차단 해제 | 나를 추가한 친구 친구 추가 |
+
 <채팅 목록>
  * 채팅방 목록
     1. 대화중인 모든 채팅방 리스트
