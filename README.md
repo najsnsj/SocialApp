@@ -25,8 +25,7 @@
    2. 친구 추가, 차단(친구가 이닐 시)
    3. 유저가 올린 스토리 리스트
 
-| ![GIF 1 설명](![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80)
-) | ![GIF 2 설명](https://via.placeholder.com/150) |
+|(![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80)) | ![GIF 2 설명](https://via.placeholder.com/150) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | GIF 1 설명                                     | GIF 2 설명                                     |
 
