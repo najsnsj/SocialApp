@@ -126,7 +126,6 @@ public class RoomFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_CODE_CHAT_ACTIVITY && resultCode == Activity.RESULT_OK) {
             chatRoomAdapter.notifyDataSetChanged();
         }else {
@@ -239,7 +238,11 @@ public class RoomFragment extends Fragment {
                             String text = jsonObject.getString("message_text");
                             String createdAt = jsonObject.getString("created_at");
                             int check = jsonObject.getInt("g_check");
-
+                            if("image".equals(jsonObject.getString("type"))) {
+                                text = "이미지를 보냈습니다.";
+                            } else if("video".equals(jsonObject.getString("type"))) {
+                                text = "동영상을 보냈습니다.";
+                            }
                             getMembers(roomId, roomName, text, createdAt, check);
                         }
                     }catch (IOException | JSONException e) {
@@ -328,28 +331,21 @@ public class RoomFragment extends Fragment {
                             }
                             groupList.add(new Profile(id, name, img));
                         }
-                        if(check == 0) {
+                        /*if(check == 0) {
                             roomList.add(new ChatRoom(roomId, roomName, groupList, text, createdAt, false));
                         } else {
                             roomList.add(new ChatRoom(roomId, roomName, groupList, text, createdAt, true));
                         }
-
-                        RoomManager.getInstance().setRoomList(roomList);
+                        System.out.println("soty: "+text);
+                        RoomManager.getInstance().setRoomList(roomList);*/
                         if (isAdded() && getActivity() != null) {
                             getActivity().runOnUiThread(() -> {
-                                chatRoomAdapter = new ChatRoomAdapter(RoomManager.getInstance().getRoomList(), myId);
-                                recyclerView.setAdapter(chatRoomAdapter);
+                                if(check == 0) {
+                                    RoomManager.getInstance().addRoomList(new ChatRoom(roomId, roomName, groupList, text, createdAt, false));
+                                } else {
+                                    RoomManager.getInstance().addRoomList(new ChatRoom(roomId, roomName, groupList, text, createdAt, true));
+                                }
                                 chatRoomAdapter.notifyDataSetChanged();
-
-                                chatRoomAdapter.setOnItemClickListener(new ChatRoomAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(ChatRoom chatRoom, String title) {
-                                        Intent intent = new Intent(getActivity(), ChatActivity.class);
-                                        intent.putExtra("room_id", chatRoom.getRoomId());
-                                        intent.putExtra("title", title);
-                                        startActivityForResult(intent, REQUEST_CODE_CHAT_ACTIVITY);
-                                    }
-                                });
                             });
                         }
                     }catch (IOException | JSONException e) {

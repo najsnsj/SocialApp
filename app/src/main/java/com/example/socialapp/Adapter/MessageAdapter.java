@@ -165,8 +165,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     sentVideo.setVisibility(View.GONE);
                     Picasso.get()
                             .load(serverURL + message.getMessageText()) // 이미지 URL
-                            .placeholder(R.drawable.add) // 로딩 중 표시할 이미지
-                            .error(R.drawable.addpost)       // 로드 실패 시 표시할 이미지
+                            .placeholder(R.drawable.loading) // 로딩 중 표시할 이미지
+                            .error(R.drawable.delete)       // 로드 실패 시 표시할 이미지
                             .into(sentImage);
                     sentTime.setVisibility(View.VISIBLE);
                     sentTime.setText(dateFormat(message.getCreatedAt()));
@@ -204,8 +204,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     receivedVideo.setVisibility(View.GONE);
                     Picasso.get()
                             .load(serverURL + message.getMessageText()) // 이미지 URL
-                            .placeholder(R.drawable.add) // 로딩 중 표시할 이미지
-                            .error(R.drawable.addpost)       // 로드 실패 시 표시할 이미지
+                            .placeholder(R.drawable.loading) // 로딩 중 표시할 이미지
+                            .error(R.drawable.delete)       // 로드 실패 시 표시할 이미지
                             .into(receivedImage);
                     receiveTime.setVisibility(View.VISIBLE);
                     receiveTime.setText(dateFormat(message.getCreatedAt()));

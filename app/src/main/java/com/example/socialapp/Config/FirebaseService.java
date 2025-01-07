@@ -27,15 +27,22 @@ public class FirebaseService extends FirebaseMessagingService {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("login_prefs", MODE_PRIVATE);
         int myId = sharedPreferences.getInt("user_id", -1);
         int roomId = -1;
+        int storyId = -1;
 
-        roomId = Integer.valueOf(remoteMessage.getData().get("room"));
+        String room = remoteMessage.getData().get("room");
+        String story = remoteMessage.getData().get("story");
         String name = remoteMessage.getData().get("name");
-        String storyId = remoteMessage.getData().get("story");
         String userId = remoteMessage.getData().get("userId");
         String title =  remoteMessage.getNotification().getTitle();
         String body =  remoteMessage.getNotification().getBody();
 
-        if(AppStatus.isChatActivityActive && AppStatus.getInstance().getRoomId() == Integer.valueOf(roomId)) {
+        if(room != null) {roomId = Integer.valueOf(room);}
+        if(story != null) {storyId = Integer.valueOf(story);}
+
+        if(AppStatus.isChatActivityActive && AppStatus.getInstance().getRoomId() == roomId) {
+            return;
+        }
+        if(AppStatus.isCommentActivityActive && AppStatus.getInstance().getStoryId() == storyId) {
             return;
         }
 
@@ -90,7 +97,7 @@ public class FirebaseService extends FirebaseMessagingService {
         notificationManager.notify(0, builder.build());
     }
 
-    private void commentNotification(String title, String body, String storyId){
+    private void commentNotification(String title, String body, int storyId){
         // NotificationManager를 사용하여 알림 표시
         String text = title;
 
@@ -104,7 +111,7 @@ public class FirebaseService extends FirebaseMessagingService {
         }
 
         Intent intent = new Intent(this, CommentActivity.class);
-        intent.putExtra("storyId", Integer.valueOf(storyId));
+        intent.putExtra("storyId", storyId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 기존 Activity 스택 제거 후 새로 생성
 
         PendingIntent pendingIntent = PendingIntent.getActivity(

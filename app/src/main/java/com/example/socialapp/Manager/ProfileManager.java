@@ -35,5 +35,19 @@ public class ProfileManager {
         userStoryList.clear();
         this.currentPage = 1;
     }
+    public void reviseStoryList(int storyId, String post) {
+        for(int i = 0; i < this.userStoryList.size(); i++) {
+            if(this.userStoryList.get(i).getId() == storyId) {
+                this.userStoryList.get(i).setPost(post);
+            }
+        }
+    }
+    public void deleteStoryList(int storyId) {
+        for(int i = 0; i < this.userStoryList.size(); i++) {
+            if(this.userStoryList.get(i).getId() == storyId) {
+                this.userStoryList.remove(i);
+            }
+        }
+    }
 }
 

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -20,14 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.socialapp.Activity.AddStoryActivity;
 import com.example.socialapp.Activity.CommentActivity;
 import com.example.socialapp.Activity.UserProfileActivity;
 import com.example.socialapp.Config.RetrofitInstance;
 import com.example.socialapp.Config.RetrofitService;
+import com.example.socialapp.Manager.ProfileManager;
+import com.example.socialapp.Manager.StoryManager;
 import com.example.socialapp.R;
 import com.example.socialapp.Entity.Story;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,22 +34,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import okhttp3.WebSocket;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
     private Context context;
     private List<Story> storyList;
     private int myId;
+    private OnItemClickListener onItemClickListener;
 
 
-    public StoryAdapter(List<Story> storyList, int myId, Context context) {
+    public StoryAdapter(List<Story> storyList, int myId, Context context, OnItemClickListener onItemClickListener) {
         this.storyList = storyList;
         this.myId = myId;
         this.context = context;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -78,6 +73,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         holder.date.setText(dateFormat(story.getCreated_at()));
         if(myId != story.getUserId()) {
             holder.revise.setVisibility(View.GONE);
+        }else{
+            holder.revise.setVisibility(View.VISIBLE);
         }
         if(story.getCheck() == true) {
             holder.like.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.love));
@@ -101,10 +98,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
                 if(holder.like.getBackground().getConstantState().equals(holder.itemView.getContext().getResources().getDrawable(R.drawable.love).getConstantState())){
                     holder.like.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.blanklove));
                     holder.likeNum.setText(String.valueOf(Integer.parseInt(holder.likeNum.getText().toString())-1));
+                    story.setLikes(false);
+                    story.setCheck(false);
                     likeChange(story.getId(), myId, true);
                 }else{
                     holder.like.setBackground(holder.itemView.getContext().getResources().getDrawable(R.drawable.love));
                     holder.likeNum.setText(String.valueOf(Integer.parseInt(holder.likeNum.getText().toString())+1));
+                    story.setLikes(true);
+                    story.setCheck(true);
                     likeChange(story.getId(), myId, false);
                 }
             }
@@ -127,24 +128,22 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
                 popupMenu.getMenuInflater().inflate(R.menu.menu_options, popupMenu.getMenu());
 
                 // 메뉴 항목 클릭 시 동작 설정
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int itemId = item.getItemId();
-                        if (itemId == R.id.action_edit) {
-                            Intent intent = new Intent(context, AddStoryActivity.class);
-                            intent.putExtra("storyId", story.getId());
-                            intent.putExtra("post", story.getPost());
-                            context.startActivity(intent);
-                            Toast.makeText(v.getContext(), "스토리 수정", Toast.LENGTH_SHORT).show();
-                            return true;
-                        } else if (itemId == R.id.action_delete) {
-                            deleteStory(story.getId());
-                            Toast.makeText(v.getContext(), "스토리가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                            return true;
-                        }
-                        return false;
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.action_edit) {
+                        onItemClickListener.onEditClicked(story.getId(), story.getPost());
+                        Toast.makeText(v.getContext(), "스토리 수정", Toast.LENGTH_SHORT).show();
+                        return true;
+                    } else if (itemId == R.id.action_delete) {
+                        deleteStory(story.getId());
+                        StoryManager.getInstance().deleteStoryList(story.getId());
+                        ProfileManager.getInstance().deleteStoryList(story.getId());
+                        notifyDataSetChanged();
+                        Toast.makeText(v.getContext(), "스토리가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
+                    return false;
+
                 });
                 // 팝업 메뉴 보여주기
                 popupMenu.show();
@@ -248,5 +247,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onEditClicked(int storyId, String post);
     }
 }

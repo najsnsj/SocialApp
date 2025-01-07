@@ -221,9 +221,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -236,6 +233,15 @@ public class ChatActivity extends AppCompatActivity {
         AppStatus.isChatActivityActive = false;
         AppStatus.getInstance().setRoomId(0);
         setResult(Activity.RESULT_OK);
+        /*boolean check = false;
+        for(ChatRoom chatRoom : chatList) {
+            if(chatRoom.getRoomId() == roomId) {
+                check = true;
+            }
+        }
+        if(!check) {        // 새롭게 추가된 방이 있을 시 채팅방 조회
+            getGroupRooms(myId);
+        }*/
         super.finish();
     }
 
@@ -285,15 +291,6 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onClosing(WebSocket webSocket, int code, String reason) {
-                boolean check = false;
-                for(ChatRoom chatRoom : chatList) {
-                    if(chatRoom.getRoomId() == roomId) {
-                        check = true;
-                    }
-                }
-                if(!check) {        // 새롭게 추가된 방이 있을 시 채팅방 조회
-                    getGroupRooms(myId);
-                }
                 webSocket.close(1000, null);
                 Log.d("ChatActivity", "WebSocket closing: " + reason);
             }

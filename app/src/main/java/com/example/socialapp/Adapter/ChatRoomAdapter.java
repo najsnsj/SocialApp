@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.socialapp.Entity.ChatRoom;
 import com.example.socialapp.Entity.Profile;
+import com.example.socialapp.Manager.RoomManager;
 import com.example.socialapp.R;
 
 import java.text.ParseException;
@@ -30,9 +32,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     private OnItemClickListener onItemClickListener;
 
     public ChatRoomAdapter(List<ChatRoom> chatRoomList, int myId) {
-        this.chatRoomList = chatRoomList;
+        this.chatRoomList = RoomManager.getInstance().getRoomList();
         sortChatRoomsByTimestamp();
         this.myId = myId;
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -164,6 +167,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
 
             if (profileImage != null) {
                 imageView.setImageBitmap(profileImage);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             } else {
                 imageView.setImageResource(R.drawable.profile_img); // 기본 이미지 설정
             }
@@ -186,7 +190,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        Collections.sort(chatRoomList, new Comparator<ChatRoom>() {
+        Collections.sort(this.chatRoomList, new Comparator<ChatRoom>() {
             @Override
             public int compare(ChatRoom room1, ChatRoom room2) {
                 try {

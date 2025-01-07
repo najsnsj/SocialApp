@@ -39,6 +39,7 @@ public class UserManager {
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
+    public void addUserList(User user) { this.userList.add(user); }
     public void resetList() {
         userList.clear();
         friendList.clear();

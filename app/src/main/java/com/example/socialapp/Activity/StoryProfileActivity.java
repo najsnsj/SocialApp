@@ -1,37 +1,28 @@
 package com.example.socialapp.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialapp.Manager.ProfileManager;
 import com.example.socialapp.R;
-import com.example.socialapp.Entity.Story;
 import com.example.socialapp.Adapter.StoryAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-
-public class StoryProfileActivity extends AppCompatActivity {
+public class StoryProfileActivity extends AppCompatActivity implements StoryAdapter.OnItemClickListener {
 
     RecyclerView recyclerView;
     StoryAdapter storyAdapter;
     ImageButton imageButton;
-    List<Story> storyList = new ArrayList<>();
     int position;
-
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int PROFILE_REQUEST_CODE = 2;
+    private static final int REQUEST_CODE_REVISE_ACTIVITY = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +39,7 @@ public class StoryProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int storyId = intent.getIntExtra("storyId", -1);
 
-        storyAdapter = new StoryAdapter(ProfileManager.getInstance().getUserStoryList(), myId, this);
+        storyAdapter = new StoryAdapter(ProfileManager.getInstance().getUserStoryList(), myId, this, this::onEditClicked);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(storyAdapter);
 
@@ -58,6 +49,8 @@ public class StoryProfileActivity extends AppCompatActivity {
                 break;
             }
         }
+
+        setResult(Activity.RESULT_OK);
 
         recyclerView.post(new Runnable() {
             @Override
@@ -78,5 +71,21 @@ public class StoryProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        storyAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEditClicked(int storyId, String post) {
+        // Edit 버튼 클릭 시 동작
+        Intent intent = new Intent(this, AddStoryActivity.class);
+        intent.putExtra("storyId", storyId);
+        intent.putExtra("post", post);
+        intent.putExtra("list",2);
+        startActivityForResult(intent, REQUEST_CODE_REVISE_ACTIVITY);
     }
 }

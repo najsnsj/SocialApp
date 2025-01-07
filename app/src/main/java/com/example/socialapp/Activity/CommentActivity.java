@@ -22,6 +22,7 @@ import com.example.socialapp.Entity.Comment;
 import com.example.socialapp.Adapter.CommentAdapter;
 import com.example.socialapp.Config.RetrofitInstance;
 import com.example.socialapp.ImageUtils;
+import com.example.socialapp.Manager.AppStatus;
 import com.example.socialapp.R;
 import com.google.gson.Gson;
 
@@ -58,6 +59,7 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
     private Button btnSend;
     private LinearLayout tagLayout;
     private int tagId = 0;
+    private int storyId = 0;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -76,7 +78,9 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
         String myName = sharedPreferences.getString("myName", null);
 
         Intent intent = getIntent();
-        int storyId = intent.getIntExtra("storyId", -1);
+        storyId = intent.getIntExtra("storyId", -1);
+
+        commentList.clear();
 
         getComment(storyId);
 
@@ -120,13 +124,10 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
                     try {
                         JSONObject jsonObject = new JSONObject(text);
                         int commentStoryId = jsonObject.getInt("story_id");
-
                         if(storyId == commentStoryId) {
                             getComment(storyId);
                             commentAdapter.notifyDataSetChanged();
                         }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -146,10 +147,18 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AppStatus.isCommentActivityActive = true;
+        AppStatus.getInstance().setStoryId(storyId);
+    }
 
     @Override
     public void finish() {
         super.finish();
+        AppStatus.isCommentActivityActive = false;
+        AppStatus.getInstance().setStoryId(0);
         webSocket.close(1000, null);
         overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_up);
     }
@@ -188,7 +197,10 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
                             } else {
                                 img = BitmapFactory.decodeResource(getResources(), R.drawable.profile_img);
                             }
-                            commentList.add(new Comment(id, storyId, answerId, userId, count, comment, created_at, name, img));
+                            System.out.println("COUNT: "+count+" comment: "+comment);
+                            if(listCheck(commentList, id, comment)) {   } else {
+                                commentList.add(new Comment(id, storyId, answerId, userId, count, comment, created_at, name, img));
+                            }
                         }
                         commentAdapter.notifyDataSetChanged();
                     } catch (IOException | JSONException e) {
@@ -237,6 +249,18 @@ public class CommentActivity extends AppCompatActivity implements CommentAdapter
                 }
             });
         }
+    }
+
+    public boolean listCheck(List<Comment> commentList, int index, String text) {
+        for(int i = 0; i< commentList.size(); i++) {
+            if(commentList.get(i).getId() == index && commentList.get(i).getComment().equals(text)) {
+                return true;
+            }
+            if(commentList.get(i).getId() == index && !commentList.get(i).getComment().equals(text)) {
+                commentList.remove(i);
+            }
+        }
+        return false;
     }
 
     @Override

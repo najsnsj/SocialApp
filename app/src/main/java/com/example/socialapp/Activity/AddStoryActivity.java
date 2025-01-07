@@ -22,6 +22,7 @@ import com.example.socialapp.Config.RetrofitInstance;
 import com.example.socialapp.Config.RetrofitService;
 import com.example.socialapp.Fragment.StoryFragment;
 import com.example.socialapp.ImageUtils;
+import com.example.socialapp.Manager.ProfileManager;
 import com.example.socialapp.R;
 import com.example.socialapp.Entity.Story;
 import com.example.socialapp.Adapter.StoryAdapter;
@@ -64,12 +65,24 @@ public class AddStoryActivity extends AppCompatActivity {
         ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra("imageUris");
         int myId = intent.getIntExtra("id", -1);
         int storyId = intent.getIntExtra("storyId", -1);
+        int check = intent.getIntExtra("list", -1);
         String storyPost = intent.getStringExtra("post");
 
         if(storyId != -1) {     // 스토리 수정할 때
-            for (Story list : StoryManager.getInstance().getImageList()) {
-                if (list.getId() == storyId) {
-                    imageList.add(list.getStory_img());
+            if(check == 1) {
+                for (Story list : StoryManager.getInstance().getImageList()) {
+                    if (list.getId() == storyId) {
+                        imageList.add(list.getStory_img());
+                    }
+                }
+            }
+            if(check == 2) {
+                for (Story list : ProfileManager.getInstance().getUserStoryList()) {
+                    if (list.getId() == storyId) {
+                        for (int i = 0; i < list.getStory_imgs().size(); i++) {
+                            imageList.add(list.getStory_imgs().get(i));
+                        }
+                    }
                 }
             }
             if (!imageList.isEmpty()) {
@@ -117,7 +130,7 @@ public class AddStoryActivity extends AppCompatActivity {
                        finish();
                     } else {
                         reviseStory(storyId, editText.getText().toString().trim());
-                        finish();
+                        setResult(Activity.RESULT_OK);
                     }
                 } else {
                     if (imageUris == null || imageUris.isEmpty()) {
@@ -199,6 +212,8 @@ public class AddStoryActivity extends AppCompatActivity {
     }
 
     private void reviseStory(int storyId, String post) {        // 스토리 수정
+        StoryManager.getInstance().reviseStoryList(storyId, post);
+        ProfileManager.getInstance().reviseStoryList(storyId, post);
         Map<String, String> body = new HashMap<>();
         body.put("storyId", String.valueOf(storyId));
         body.put("post", post);
@@ -208,13 +223,14 @@ public class AddStoryActivity extends AppCompatActivity {
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
             public void onResponse(retrofit2.Call<Void> call, retrofit2.Response<Void> response) {
-                StoryManager.getInstance().reviseStoryList(storyId, post);
+
             }
             @Override
             public void onFailure(retrofit2.Call<Void> call, Throwable t) {
                 Log.e("AddStoryActivity", "Failed to story", t);
             }
         });
+        finish();
     }
 }
 

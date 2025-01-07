@@ -142,7 +142,6 @@ public class NavigationActivity extends AppCompatActivity {
                                     message = "동영상을 보냈습니다.";
                                 }
                                 rooms.set(i, new ChatRoom(room.getRoomId(), room.getRoomName(), room.getUsers(), message, time, room.getCheck()));
-                                //rooms.set(i, new ChatRoom(room.getRoomId(), room.getRoomName(), room.getUsers(), room.getName(), img,jsonObject.getString("message_text"), time, room.getCheck()));
                                 check = true;
                                 break;
                             }
@@ -151,7 +150,6 @@ public class NavigationActivity extends AppCompatActivity {
                         if(!check) {
                             getGroupRooms(myId);
                         }
-
                         RoomManager.getInstance().setRoomList(rooms);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -273,12 +271,20 @@ public class NavigationActivity extends AppCompatActivity {
                             }
                             groupList.add(new Profile(id, name, img));
                         }
-                        if(check == 0) {
+                        /*if(check == 0) {
                             roomList.add(new ChatRoom(roomId, roomName, groupList, text, createdAt, false));
                         } else {
                             roomList.add(new ChatRoom(roomId, roomName, groupList, text, createdAt, true));
                         }
-                        RoomManager.getInstance().setRoomList(roomList);
+                        RoomManager.getInstance().setRoomList(roomList);*/
+                        runOnUiThread(() -> {
+                            if (check == 0) {
+                                RoomManager.getInstance().addRoomList(new ChatRoom(roomId, roomName, groupList, text, createdAt, false));
+                            } else {
+                                RoomManager.getInstance().addRoomList(new ChatRoom(roomId, roomName, groupList, text, createdAt, true));
+                            }
+                        });
+
                     }catch (IOException | JSONException e) {
                         e.printStackTrace();
                         Log.e("NavigationActivity", "Error parsing JSON", e);

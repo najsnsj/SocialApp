@@ -89,6 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private List<Story> likeList = new ArrayList<>();
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int PROFILE_REQUEST_CODE = 2;
+    private static final int REQUEST_CODE_REVISE_ACTIVITY = 3;
     private String userName = null;
     private String userMessage = null;
     private Bitmap userImage = null;
@@ -101,6 +102,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private List<User> userList = new ArrayList<>();
     private List<Profile> profileList = new ArrayList<>();
     private List<ChatRoom> chatList = new ArrayList<>();
+    private User user1 = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -170,7 +172,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        userProfileAdapter = new UserProfileAdapter(imagesList, this);
+        userProfileAdapter = new UserProfileAdapter(ProfileManager.getInstance().getUserStoryList(), this);
         recyclerView.setAdapter(userProfileAdapter);
 
         userProfileAdapter.setOnItemClickListener(new UserProfileAdapter.OnItemClickListener() {
@@ -179,7 +181,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 Intent storyIntent = new Intent(UserProfileActivity.this, StoryProfileActivity.class);
                 storyIntent.putExtra("userId", userId);
                 storyIntent.putExtra("storyId", story.getId());
-                startActivity(storyIntent);
+                startActivityForResult(storyIntent, REQUEST_CODE_REVISE_ACTIVITY);
             }
         });
 
@@ -435,7 +437,6 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(condition == true) {
-                    System.out.println("true: "+userId);
                     putMember(myId, userId);
                     ibAdd.setVisibility(View.GONE);
                     ibBlock.setVisibility(View.GONE);
@@ -446,8 +447,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     setResult(Activity.RESULT_OK, resultIntent);
 
                 }else {
-                    System.out.println("false: "+userId);
                     addUser(myId, userId);
+                    UserManager.getInstance().addUserList(user1);
                     setResult(Activity.RESULT_OK);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -493,7 +494,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 // diff가 0이면 스크롤이 맨 아래에 도달한 상태
                 if (diff <= 0) {
                     getImage(userId, myId);  // 마지막에 도달 시 이미지 로드
-                    System.out.println("Loading more images...");
                 }
             }
         });
@@ -507,11 +507,11 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        System.out.println("SDFDS");
+        userProfileAdapter.notifyDataSetChanged();
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             try {
-
                 InputStream inputStream = getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 ivProfile.setImageBitmap(bitmap);
@@ -519,7 +519,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.e("UserProfileActivity", "Error loading image", e);
             }
         }
-
         if (requestCode == PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
             // ProfileFragment 업데이트 호출
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -631,6 +630,8 @@ public class UserProfileActivity extends AppCompatActivity {
                             userName = name;
                             userMessage = message;
                             userImage = img;
+
+                            user1 = new User(userId, name, email,password, message, img);
                         }
 
                     } catch (IOException | JSONException e) {
@@ -738,19 +739,13 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void addUser(int myId, int friendId) {
         User friend = new User(myId, friendId);
-
-        Gson gson = new Gson();
-        String friendJson = gson.toJson(friend);
-
         RetrofitService retrofitService = RetrofitInstance.getRetrofitInstance().create(RetrofitService.class);
         retrofit2.Call<Void> call = retrofitService.makeFriend(friend);
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
             public void onResponse(retrofit2.Call<Void> call, retrofit2.Response<Void> response) {
                 if (response.isSuccessful()) {
-                    if(webSocket != null) {
-                        webSocket.send(friendJson);
-                    }
+
                 } else {
                     Log.e("UserProfileActivity", "Failed to user");
                 }
@@ -895,6 +890,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 ProfileManager.getInstance().addUserStoryList(storiesList);
                                 ProfileManager.getInstance().addPage();
+                                userProfileAdapter.notifyDataSetChanged();
                             });
                         }
 

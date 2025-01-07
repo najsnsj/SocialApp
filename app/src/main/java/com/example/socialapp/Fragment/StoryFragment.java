@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -44,11 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
-public class StoryFragment extends Fragment {
+public class StoryFragment extends Fragment implements StoryAdapter.OnItemClickListener {
 
     private ActivityResultLauncher<Intent> launcher;
     private ActivityResultLauncher<String> imagePickerLauncher;
@@ -70,6 +65,7 @@ public class StoryFragment extends Fragment {
     private boolean isLoading = false;
     private final int pageSize = 10;
     private static final int REQUEST_CODE_STORY_ACTIVITY = 1;
+    private static final int REQUEST_CODE_REVISE_ACTIVITY = 2;
 
     @NonNull
     @Override
@@ -98,7 +94,7 @@ public class StoryFragment extends Fragment {
             getImages(myId);
         }
 
-        storyAdapter = new StoryAdapter(filterStories(StoryManager.getInstance().getStoryList()), myId, getContext());
+        storyAdapter = new StoryAdapter(StoryManager.getInstance().getFilterList(), myId, getContext(), this::onEditClicked);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(storyAdapter);
 
@@ -114,24 +110,32 @@ public class StoryFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             if(!isLoading) {
                 StoryManager.getInstance().resetList();
-                storyAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
+            storyAdapter.notifyDataSetChanged();
         });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == StoryManager.getInstance().getStoryList().size() -1) {
+                if(linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == StoryManager.getInstance().getFilterList().size() -1) {
                     getImages(myId);
                 }
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onEditClicked(int storyId, String post) {
+        Intent intent = new Intent(getActivity(), AddStoryActivity.class);
+        intent.putExtra("storyId", storyId);
+        intent.putExtra("post", post);
+        intent.putExtra("list",1);
+        startActivityForResult(intent, REQUEST_CODE_REVISE_ACTIVITY);
     }
 
     @Override
@@ -155,7 +159,7 @@ public class StoryFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE_STORY_ACTIVITY);
     }
 
-    private List<Story> filterStories(List<Story> list) {
+    private void filterStories(List<Story> list) {
         List<Story> storyList = new ArrayList<>();
         for(Story story : list) {
             if(story.getUserId() == myId) {
@@ -165,7 +169,7 @@ public class StoryFragment extends Fragment {
                 storyList.add(story);
             }
         }
-        return storyList;
+        StoryManager.getInstance().addFilterList(storyList);
     }
 
     public void getImages(int userId) {
@@ -294,11 +298,9 @@ public class StoryFragment extends Fragment {
                             if (!sList.isEmpty()) {
                                 getActivity().runOnUiThread(() -> {
                                     StoryManager.getInstance().addStoryList(sList);
-                                    storyAdapter = new StoryAdapter(filterStories(StoryManager.getInstance().getStoryList()), myId, getContext());
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                    recyclerView.setAdapter(storyAdapter);
-                                    storyAdapter.notifyDataSetChanged();
+                                    filterStories(sList);
                                     StoryManager.getInstance().addPage();
+                                    storyAdapter.notifyDataSetChanged();
                                 });
                             }
                         }
@@ -318,6 +320,5 @@ public class StoryFragment extends Fragment {
                 Log.e("StoryFragment", "Failed to load story", t);
             }
         });
-
     }
 }

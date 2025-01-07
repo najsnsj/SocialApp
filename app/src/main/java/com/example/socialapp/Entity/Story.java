@@ -64,7 +64,8 @@ public class Story {
     }
 
     public void setPost(String post) { this.post = post; }
-
+    public void setCheck(boolean check) { this.check = check; }
+    public void setLikes(boolean check) { if(check){ this.likes++; } else { this.likes--; } }
     public int getId() { return id; }
     public int getUserId() { return user_id; }
     public int getLikes() { return likes; }

@@ -43,7 +43,10 @@
         <activity android:name=".Activity.ChatActivity" />
         <activity android:name=".Activity.NavigationActivity"/>
         <activity android:name=".Activity.UserProfileActivity"/>
-        <activity android:name=".Activity.AddStoryActivity"/>
+        <activity
+            android:name=".Activity.AddStoryActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".Activity.AddFriendActivity"/>
         <activity android:name=".Activity.AddRoomActivity"/>
         <activity android:name=".Activity.StoryProfileActivity"/>
