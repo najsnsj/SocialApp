@@ -41,8 +41,10 @@
  * 채팅방
     1. 방의 유저들과 채팅
     2. 미디어(동영상, 이미지) 공유 가능[gif(좌) 이미지, gif(우) 동영상 전송]
+ 
+ <a id="채팅-시작"></a>
 
-| <a id="채팅-시작"></a>![단톡 생성](https://github.com/user-attachments/assets/44c1d724-4c38-4569-8016-25f6acd4cb31) | ![메시지 알림](https://github.com/user-attachments/assets/9bedd2ee-6fc2-4b7a-b6c6-f7ec43ba1d5f) |
+| ![단톡 생성](https://github.com/user-attachments/assets/44c1d724-4c38-4569-8016-25f6acd4cb31) | ![메시지 알림](https://github.com/user-attachments/assets/9bedd2ee-6fc2-4b7a-b6c6-f7ec43ba1d5f) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | 단체 채팅 생성 후 메시지 전송 | 수신한 메시지 알림 후 알림에 맞는 채팅방 입장 |
 
@@ -53,7 +55,9 @@
     3. 내 스토리 생성 및 수정, 삭제 가능
     4. 스토리에 답글 및 댓글이 달릴 시 알림(스토리 주인, 언급된 유저)  
 
-| <a id="스토리-로드"></a>![스토리 로드 후 로드](https://github.com/user-attachments/assets/ade3085a-6db5-4d2d-add0-c21d629bec0d) | ![스토리 생성](https://github.com/user-attachments/assets/5904774f-6a4b-4c9e-9046-daa619924351) | ![스토리 수정 및 삭제](https://github.com/user-attachments/assets/9a285c84-833a-422e-a6e6-80f3efc8e243) |
+<a id="스토리-로드"></a>
+
+| ![스토리 로드 후 로드](https://github.com/user-attachments/assets/ade3085a-6db5-4d2d-add0-c21d629bec0d) | ![스토리 생성](https://github.com/user-attachments/assets/5904774f-6a4b-4c9e-9046-daa619924351) | ![스토리 수정 및 삭제](https://github.com/user-attachments/assets/9a285c84-833a-422e-a6e6-80f3efc8e243) |
 |:------------------------------------------------------:|:------------------------------------------------------:|:------------------------------------------------------:|
 | 스토리 로드 후 밑에 닿을 시 로드 | 스토리 생성 | 기존에 생성한 자신의 스토리 수정(미디어X, 게시글만) 및 삭제 |
 | ![스토리 댓글 달기](https://github.com/user-attachments/assets/25fb2055-3024-45d6-bdf5-da50dbce7b5d) | ![답글 알림](https://github.com/user-attachments/assets/21c4ebe8-118d-41ab-967f-065a6cdde5ba) | 
