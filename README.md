@@ -18,7 +18,7 @@
 
  * 나를 추가한 친구 목록
    1. 나를 추가한 친구(상대방만 나를 친구 추가 상태)
-   2. 차단 친구
+   2. 차단 친구(차단 상태는 X UI로 표현[GIF 3번])
 
  * 프로필
    1. 메시지 보내기(친구)
@@ -28,7 +28,7 @@
 | ![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | 자신의 프로필의 이미지, 상태메시지, 닉네임을 변경 | 가입한 E-mail을 통해 유저 검색(친구일 시 닉네임으로 검색 가능) |
-| ![차단 친구 관리](https://github.com/user-attachments/assets/1d61a347-8f0d-482a-a5e6-8d6a3e0da9cc) | ![친추한 친구 추가](https://github.com/user-attachments/assets/567bd807-4cb8-40b4-85f7-1233bddcdcf7) |
+| ![차단 친구 관리](https://github.com/user-attachments/assets/1d61a347-8f0d-482a-a5e6-8d6a3e0da9cc)(#gif-3-섹션) | ![친추한 친구 추가](https://github.com/user-attachments/assets/567bd807-4cb8-40b4-85f7-1233bddcdcf7) |
 | 차단한 친구 차단 해제 | 나를 추가한 친구 친구 추가 |
 
 <채팅 목록>
