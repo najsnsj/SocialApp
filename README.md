@@ -23,7 +23,7 @@
  * 프로필
    1. 메시지 보내기(친구)
    2. 친구 추가, 차단(친구가 이닐 시)
-   3. 유저가 올린 스토리 리스트
+   3. 유저가 올린 스토리 리스트(10개 씩 로드)
 
 | ![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
 |:----------------------------------------------:|:----------------------------------------------:|
@@ -47,11 +47,13 @@
  <스토리 목록>
   * 스토리
     1. 나와 친구인 모든 친구의 스토리(차단 친구 X)
-    2. 내 스토리 생성 및 수정, 삭제 가능
-    3. 스토리에 답글 및 댓글이 달릴 시 알림(스토리 주인, 언급된 유저)   
+    2. 스토리 로드 시 일정 갯수(10개)만 로드(로드 시간 지연 때문 [스로리 로드 gif](#스토리-로드))
+    3. 내 스토리 생성 및 수정, 삭제 가능
+    4. 스토리에 답글 및 댓글이 달릴 시 알림(스토리 주인, 언급된 유저)  
 
-| ![스토리 생성](https://github.com/user-attachments/assets/5904774f-6a4b-4c9e-9046-daa619924351) | ![스토리 수정 및 삭제](https://github.com/user-attachments/assets/9a285c84-833a-422e-a6e6-80f3efc8e243) |
+| <a id="스토리-로드"></a>![스토리 로드 후 로드](https://github.com/user-attachments/assets/ade3085a-6db5-4d2d-add0-c21d629bec0d) | ![스토리 생성](https://github.com/user-attachments/assets/5904774f-6a4b-4c9e-9046-daa619924351) | ![스토리 수정 및 삭제](https://github.com/user-attachments/assets/9a285c84-833a-422e-a6e6-80f3efc8e243) |
 |:----------------------------------------------:|:----------------------------------------------:|
-| 스토리 생성 | 기존에 생성한 자신의 스토리 수정(미디어X, 게시글만) 및 삭제 |
-| ![스토리 댓글 달기](https://github.com/user-attachments/assets/25fb2055-3024-45d6-bdf5-da50dbce7b5d) | ![답글 알림](https://github.com/user-attachments/assets/21c4ebe8-118d-41ab-967f-065a6cdde5ba) |
+| 스토리 로드 후 밑에 닿을 시 로드 | 스토리 생성 | 기존에 생성한 자신의 스토리 수정(미디어X, 게시글만) 및 삭제 |
+| ![스토리 댓글 달기](https://github.com/user-attachments/assets/25fb2055-3024-45d6-bdf5-da50dbce7b5d) | ![답글 알림](https://github.com/user-attachments/assets/21c4ebe8-118d-41ab-967f-065a6cdde5ba) | 
 | 스토리 댓글 실시간 대화 | 스토리 답글 시 알림 후 알림에 맞는 스토리로 입장 |
+
