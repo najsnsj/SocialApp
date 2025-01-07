@@ -24,8 +24,10 @@
    1. 메시지 보내기(친구)
    2. 친구 추가, 차단(친구가 이닐 시)
    3. 유저가 올린 스토리 리스트(10개 씩 로드)
-
-| <a id="프로필-시작"></a>![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
+ 
+ <a id="프로필-시작"></a>
+ 
+| ![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | 자신의 프로필의 이미지, 상태메시지, 닉네임을 변경 | 가입한 E-mail을 통해 유저 검색(친구일 시 닉네임으로 검색 가능) |
 | <a id="차단-친구-관리"></a>![차단 친구 관리](https://github.com/user-attachments/assets/1d61a347-8f0d-482a-a5e6-8d6a3e0da9cc) | ![친추한 친구 추가](https://github.com/user-attachments/assets/567bd807-4cb8-40b4-85f7-1233bddcdcf7) |
