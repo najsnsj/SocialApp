@@ -25,7 +25,7 @@
    2. 친구 추가, 차단(친구가 이닐 시)
    3. 유저가 올린 스토리 리스트(10개 씩 로드)
 
-| ![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
+| <a id="프로필-시작"></a>![프로필 변경](https://github.com/user-attachments/assets/a0e30770-3ed0-4b8f-950c-1d0097a50a80) | ![이메일로 친추](https://github.com/user-attachments/assets/51f467a4-a094-4b3e-879e-991252442e49) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | 자신의 프로필의 이미지, 상태메시지, 닉네임을 변경 | 가입한 E-mail을 통해 유저 검색(친구일 시 닉네임으로 검색 가능) |
 | <a id="차단-친구-관리"></a>![차단 친구 관리](https://github.com/user-attachments/assets/1d61a347-8f0d-482a-a5e6-8d6a3e0da9cc) | ![친추한 친구 추가](https://github.com/user-attachments/assets/567bd807-4cb8-40b4-85f7-1233bddcdcf7) |
@@ -40,7 +40,7 @@
     1. 방의 유저들과 채팅
     2. 미디어(동영상, 이미지) 공유 가능[gif(좌) 이미지, gif(우) 동영상 전송]
 
-| ![단톡 생성](https://github.com/user-attachments/assets/44c1d724-4c38-4569-8016-25f6acd4cb31) | ![메시지 알림](https://github.com/user-attachments/assets/9bedd2ee-6fc2-4b7a-b6c6-f7ec43ba1d5f) |
+| <a id="채팅-시작"></a>![단톡 생성](https://github.com/user-attachments/assets/44c1d724-4c38-4569-8016-25f6acd4cb31) | ![메시지 알림](https://github.com/user-attachments/assets/9bedd2ee-6fc2-4b7a-b6c6-f7ec43ba1d5f) |
 |:----------------------------------------------:|:----------------------------------------------:|
 | 단체 채팅 생성 후 메시지 전송 | 수신한 메시지 알림 후 알림에 맞는 채팅방 입장 |
 
