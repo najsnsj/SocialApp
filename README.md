@@ -10,6 +10,8 @@
 
 테이블
 
+![image](https://github.com/user-attachments/assets/083c5a2e-001b-4b0f-9986-11c67aac5955)
+
 주요 기능
 
 <친구 목록>
