@@ -9,7 +9,13 @@
   * DB: MySQL
 
 테이블
+
 ![image](https://github.com/user-attachments/assets/083c5a2e-001b-4b0f-9986-11c67aac5955)
+
+DB 설명
+
+![image](https://github.com/user-attachments/assets/11264253-e4d2-4bb8-b8b9-020a1275bdf5)
+
 
 주요 기능
 
